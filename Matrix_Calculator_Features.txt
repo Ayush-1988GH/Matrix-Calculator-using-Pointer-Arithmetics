@@ -1,0 +1,66 @@
+﻿Matrix Calculator – Full Detailed Explanation
+
+1. Overview This document explains every function, concept, pointer operation, recursive logic, and
+validation step used in the Matrix Calculator project written entirely using static memory, VLAs, and
+pointer arithmetic.
+
+2. Core Design • User enters size n → all matrices are n×n. • Three matrices mat1, mat2, mat3 are
+declared as variable-length arrays. • Pointers (&mat;[x][0][0]) are used to treat them as 1D blocks
+for operations. • All operations reuse these static matrices. • No dynamic memory, no structs.
+
+3. matrixInput • Inputs values for an n×n matrix. • Uses ptr+i to access continuous memory since 2D
+arrays are stored row■major. • Reads m*m elements in a simple loop.
+
+4. count • Counts digits in a number to support aligned printing.
+
+5. matrixPrint • First finds max digit width among all elements. • Uses "%*d" formatting to align
+columns. • Breaks line every m elements to form matrix rows.
+
+6. matrixAdd / matrixSub • Uses single loop from 0 to m*m. • Each result element = corresponding
+elements of input matrices. • Stores into a temporary local matrix then prints.
+
+7. matrixPro (Matrix Multiplication) • Classic triple nested loop. • Uses indices converted to pointer
+arithmetic: *(ptr + i*m + j) to write element. • Computes Σ A[i][k] * B[k][j].
+
+8. matrixTrace • Diagonal elements lie at indices 0, m+1, 2(m+1) … • Sums elements by jumping
+with i += m+1.
+
+9. matrixTranspose • Loops over i,j. • Writes output[j][i] into transposed matrix. • Uses pointer
+formula: *(ptr + i*m + j) = *(ptr1 + j*m + i)
+
+10. Determinant (matrixDet) • Implements recursive Laplace expansion. • Base cases: – 1×1 →
+return element – 2×2 → ad – bc • For larger n: – Build (n■1)×(n■1) minor using VLA temp array. –
+Alternate signs (+ – + – …) – Recursively compute sub-determinants.
+
+11. getMinor • Creates submatrix by skipping the specified row and column.
+
+12. matrixCofactor • For each (i, j): – Build minor – Compute determinant of minor – Multiply by
+(-1)^(i+j)
+
+13. matrixAdjoint • Transposes the cofactor matrix.
+
+14. printInverse • Computes determinant. • If det=0 → matrix is singular. • Otherwise inverse =
+adjoint / determinant (elementwise double division).
+
+15. Type Checking Functions • isNullMatrix → all elements zero • isIdentity → diagonal =1,
+off-diagonal=0 • isDiagonal → all off-diagonal zero • isSymmetric → A[i][j] = A[j][i] •
+isSkewSymmetric → diag=0 AND A[i][j] = -A[j][i]
+
+16. identifyMatrixTypes • Calls all above checks. • Prints exact classification.
+
+17. Menu System • Uses infinite while loop with switch-case. • Each option checks if required
+matrices are already filled. • Prevents operations on empty matrices. • Option 0 cleanly exits.
+
+18. Main Function • Reads matrix size n with validation. • Declares mat1[n][n], mat2[n][n],
+mat3[n][n]. • Creates pointers ptr1, ptr2, ptr3 for linear access. • Tracks which matrices are filled via
+flags. • Loops menu until user chooses exit. • Performs safe error handling throughout.
+
+
+
+19. Concepts Applied • Pointer arithmetic • Variable Length Arrays • Row-major representation of
+2D arrays • Recursive determinant expansion • Mathematical matrix theory • Modular functional
+organization • Input validation and UI handling
+
+20. Conclusion This project demonstrates deep understanding of: • How 2D matrices are stored in
+memory • How to manipulate them through pointers • Recursive mathematical computation • Static
+memory management • Clean modular coding in C
