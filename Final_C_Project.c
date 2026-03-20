@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* TEAM MEMBERS
-125EC0012 AYUSH PATEL
-125ME0010 SAKSHAM SINGH
-125AD0006 SIDDHESH GAHUKAR
-125ME0009 PRAVEEN KUMAR
-*/
-
 void matrixInput(int *ptr,int m){
     for(int i=0 ;i < m*m ;i++){
         scanf("%d",(ptr + i));
